@@ -15,24 +15,28 @@ class Book
     #[ORM\Column]
 
     // avec "groups()" je limite la donnee a retourner
-    #[Groups('getBooks')]
+    #[Groups(['getBooks', 'getAuthors'])]
 
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     // avec "groups()" je limite la donnee a retourner
-    #[Groups('getBooks')]
+    #[Groups(['getBooks', 'getAuthors'])]
+
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     // avec "groups()" je limite la donnee a retourner
-    #[Groups('getBooks')]
+    #[Groups(['getBooks', 'getAuthors'])]
     private ?string $coverText = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
-    
+
     // avec "groups()" je limite la donnee a retourner
     #[Groups('getBooks')]
+
+    // il va me permettre de pas avoir de probleme lors de la suppression de mon auteur, a mettre quand jessaie d'effacer un element d'une autre entité qui est lié a cette entité
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private ?Author $author = null;
 
     public function getId(): ?int

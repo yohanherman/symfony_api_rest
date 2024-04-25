@@ -14,26 +14,28 @@ class Author
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-     // avec "groups()" je limite la donnee a retourner
-    #[Groups('getBooks')]
+    // avec "groups()" je limite la donnee a retourner
+    #[Groups(['getBooks', 'getAuthors'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
 
     // avec "groups()" je limite la donnee a retourner
-    #[Groups('getBooks')]
+    #[Groups(['getBooks', 'getAuthors'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
 
     // avec "groups()" je limite la donnee a retourner
-    #[Groups('getBooks')]
+    #[Groups(['getBooks', 'getAuthors'])]
     private ?string $firstName = null;
 
     /**
      * @var Collection<int, Book>
      */
+
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author')]
+    #[Groups(['getAuthors'])]
     private Collection $books;
 
     public function __construct()
