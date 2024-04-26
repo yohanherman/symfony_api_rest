@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 class Author
@@ -22,12 +23,14 @@ class Author
 
     // avec "groups()" je limite la donnee a retourner
     #[Groups(['getBooks', 'getAuthors'])]
+    #[Assert\NotBlank(message: 'ce champ est requis')]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
 
     // avec "groups()" je limite la donnee a retourner
     #[Groups(['getBooks', 'getAuthors'])]
+    #[Assert\NotBlank(message: 'ce champ est requis')]
     private ?string $firstName = null;
 
     /**

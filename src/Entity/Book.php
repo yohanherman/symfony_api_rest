@@ -6,6 +6,7 @@ use App\Repository\BookRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -23,6 +24,8 @@ class Book
     // avec "groups()" je limite la donnee a retourner
     #[Groups(['getBooks', 'getAuthors'])]
 
+    #[Assert\NotBlank(message:"le titre du livre est requis")]
+    #[Assert\Length(min:4,max:40,minMessage:'votre titre doit avoir au moins {{ limit }} mots ',maxMessage:'votre titre ne peut pas avoir plus de {{limit}} mots')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
